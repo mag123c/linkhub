@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ExternalLink, Trash2, Edit2, Check, X } from 'lucide-react';
+import { ExternalLink, Trash2, Edit2, Check, X, Copy } from 'lucide-react';
 import { Link } from '@/shared/types';
 import { TagInput } from './TagInput';
 
@@ -15,6 +15,7 @@ export function LinkCard({ link, existingTags, onUpdate, onDelete, onTagClick }:
   const [isEditing, setIsEditing] = useState(false);
   const [editTitle, setEditTitle] = useState(link.title);
   const [editTags, setEditTags] = useState(link.tags);
+  const [copied, setCopied] = useState(false);
 
   function handleSave() {
     onUpdate(link.id, {
@@ -28,6 +29,12 @@ export function LinkCard({ link, existingTags, onUpdate, onDelete, onTagClick }:
     setEditTitle(link.title);
     setEditTags(link.tags);
     setIsEditing(false);
+  }
+
+  async function handleCopy() {
+    await navigator.clipboard.writeText(link.url);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1500);
   }
 
   if (isEditing) {
@@ -112,6 +119,17 @@ export function LinkCard({ link, existingTags, onUpdate, onDelete, onTagClick }:
             title="Edit"
           >
             <Edit2 className="w-3.5 h-3.5" />
+          </button>
+          <button
+            onClick={handleCopy}
+            className={`p-1.5 rounded-md transition-colors ${
+              copied
+                ? 'text-green-500 bg-green-50'
+                : 'text-ink-300 hover:text-ink-600 hover:bg-ink-100'
+            }`}
+            title={copied ? 'Copied!' : 'Copy URL'}
+          >
+            {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
           </button>
           <a
             href={link.url}
