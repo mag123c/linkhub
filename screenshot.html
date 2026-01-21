@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>LinkHub Screenshot</title>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'IBM Plex Sans', system-ui, sans-serif;
+      background: linear-gradient(135deg, #f5f5f4 0%, #e7e5e4 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+    }
+
+    .container {
+      width: 1280px;
+      height: 800px;
+      background: linear-gradient(145deg, #fafaf9 0%, #f5f5f4 100%);
+      border-radius: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .container::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      opacity: 0.03;
+      pointer-events: none;
+    }
+
+    .left-content {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      max-width: 400px;
+    }
+
+    .logo {
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 64px;
+      font-weight: 600;
+      color: #1c1917;
+      letter-spacing: -0.02em;
+    }
+
+    .tagline {
+      font-size: 24px;
+      color: #57534e;
+      line-height: 1.5;
+    }
+
+    .features {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .feature {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 18px;
+      color: #44403c;
+    }
+
+    .feature-icon {
+      width: 32px;
+      height: 32px;
+      background: #fef3c7;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #d97706;
+      font-size: 16px;
+    }
+
+    /* Browser mockup */
+    .browser {
+      width: 440px;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 6px rgba(28, 25, 23, 0.05), 0 20px 60px rgba(28, 25, 23, 0.15);
+      overflow: hidden;
+    }
+
+    .browser-header {
+      height: 48px;
+      background: #f5f5f4;
+      border-bottom: 1px solid #e7e5e4;
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      gap: 8px;
+    }
+
+    .browser-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #d6d3d1;
+    }
+
+    .browser-dot.red { background: #fca5a5; }
+    .browser-dot.yellow { background: #fcd34d; }
+    .browser-dot.green { background: #86efac; }
+
+    /* Popup content */
+    .popup {
+      background: #fafaf9;
+      padding: 0;
+    }
+
+    .popup-header {
+      padding: 20px;
+      border-bottom: 1px solid rgba(231, 229, 228, 0.6);
+    }
+
+    .popup-title-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .popup-title {
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 24px;
+      font-weight: 600;
+      color: #1c1917;
+    }
+
+    .save-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      background: #1c1917;
+      color: #fafaf9;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      background: white;
+      border: 1px solid #e7e5e4;
+      border-radius: 8px;
+      margin-bottom: 12px;
+    }
+
+    .search-box input {
+      border: none;
+      outline: none;
+      font-size: 14px;
+      color: #a8a29e;
+      background: transparent;
+    }
+
+    .tags-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tag-icon {
+      color: #d6d3d1;
+      font-size: 14px;
+    }
+
+    .tag {
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .tag.all {
+      background: #292524;
+      color: #fafaf9;
+    }
+
+    .tag.active {
+      background: #f59e0b;
+      color: white;
+    }
+
+    .tag.inactive {
+      background: #f5f5f4;
+      color: #78716c;
+    }
+
+    /* Links */
+    .popup-content {
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .link-card {
+      padding: 16px;
+      background: white;
+      border: 1px solid rgba(231, 229, 228, 0.8);
+      border-radius: 8px;
+    }
+
+    .link-card-inner {
+      display: flex;
+      gap: 12px;
+    }
+
+    .favicon {
+      width: 20px;
+      height: 20px;
+      background: #e7e5e4;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      color: #78716c;
+      flex-shrink: 0;
+    }
+
+    .link-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .link-title {
+      font-size: 14px;
+      font-weight: 500;
+      color: #292524;
+      margin-bottom: 4px;
+    }
+
+    .link-url {
+      font-size: 12px;
+      color: #a8a29e;
+    }
+
+    .link-tags {
+      display: flex;
+      gap: 6px;
+      margin-top: 10px;
+    }
+
+    .link-tag {
+      padding: 2px 8px;
+      background: #f5f5f4;
+      color: #57534e;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 500;
+    }
+
+    /* Footer */
+    .popup-footer {
+      padding: 12px 20px;
+      border-top: 1px solid rgba(231, 229, 228, 0.6);
+      text-align: center;
+    }
+
+    .popup-footer p {
+      font-size: 10px;
+      color: #a8a29e;
+    }
+
+    /* SVG icons */
+    .icon {
+      width: 16px;
+      height: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Left: Branding -->
+    <div class="left-content">
+      <h1 class="logo">LinkHub</h1>
+      <p class="tagline">
+        Your personal link library.<br>
+        Organize with tags, search fast, share easily.
+      </p>
+      <div class="features">
+        <div class="feature">
+          <div class="feature-icon">#</div>
+          <span>Tag-based organization</span>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">⚡</div>
+          <span>Full-text search</span>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">📋</div>
+          <span>One-click copy</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Browser mockup -->
+    <div class="browser">
+      <div class="browser-header">
+        <div class="browser-dot red"></div>
+        <div class="browser-dot yellow"></div>
+        <div class="browser-dot green"></div>
+      </div>
+      <div class="popup">
+        <div class="popup-header">
+          <div class="popup-title-row">
+            <span class="popup-title">LinkHub</span>
+            <div class="save-btn">
+              <span>+</span>
+              <span>Save</span>
+            </div>
+          </div>
+          <div class="search-box">
+            <svg class="icon" fill="none" stroke="#a8a29e" stroke-width="2" viewBox="0 0 24 24">
+              <circle cx="11" cy="11" r="8"/>
+              <path d="m21 21-4.35-4.35"/>
+            </svg>
+            <input type="text" placeholder="Search links..." disabled>
+          </div>
+          <div class="tags-row">
+            <span class="tag-icon">#</span>
+            <span class="tag all">All</span>
+            <span class="tag active">design</span>
+            <span class="tag inactive">dev</span>
+            <span class="tag inactive">article</span>
+          </div>
+        </div>
+        <div class="popup-content">
+          <div class="link-card">
+            <div class="link-card-inner">
+              <div class="favicon">D</div>
+              <div class="link-info">
+                <div class="link-title">Dribbble - Discover the World's Top Designers</div>
+                <div class="link-url">dribbble.com</div>
+                <div class="link-tags">
+                  <span class="link-tag">design</span>
+                  <span class="link-tag">inspiration</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="link-card">
+            <div class="link-card-inner">
+              <div class="favicon">F</div>
+              <div class="link-info">
+                <div class="link-title">Figma: The Collaborative Interface Design Tool</div>
+                <div class="link-url">figma.com</div>
+                <div class="link-tags">
+                  <span class="link-tag">design</span>
+                  <span class="link-tag">tool</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="link-card">
+            <div class="link-card-inner">
+              <div class="favicon">A</div>
+              <div class="link-info">
+                <div class="link-title">Awwwards - Website Awards</div>
+                <div class="link-url">awwwards.com</div>
+                <div class="link-tags">
+                  <span class="link-tag">design</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="popup-footer">
+          <p>3 links saved</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
