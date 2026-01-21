@@ -40,17 +40,17 @@ export function TagInput({ tags, onChange, suggestions = [], placeholder = 'Add 
 
   return (
     <div className="relative">
-      <div className="flex flex-wrap gap-1.5 p-2 border border-gray-300 rounded-lg focus-within:ring-2 focus-within:ring-primary-500 focus-within:border-transparent bg-white">
+      <div className="flex flex-wrap gap-1.5 p-2.5 border border-ink-200 rounded-lg focus-within:ring-2 focus-within:ring-accent-400/40 focus-within:border-accent-500 bg-white transition-all">
         {tags.map(tag => (
           <span
             key={tag}
-            className="inline-flex items-center gap-1 px-2 py-0.5 text-xs bg-primary-100 text-primary-700 rounded-full"
+            className="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium bg-accent-100 text-accent-700 rounded-full"
           >
             {tag}
             <button
               type="button"
               onClick={() => removeTag(tag)}
-              className="hover:text-primary-900"
+              className="hover:text-accent-900 transition-colors"
             >
               <X className="w-3 h-3" />
             </button>
@@ -67,18 +67,18 @@ export function TagInput({ tags, onChange, suggestions = [], placeholder = 'Add 
           onFocus={() => setShowSuggestions(true)}
           onBlur={() => setTimeout(() => setShowSuggestions(false), 150)}
           placeholder={tags.length === 0 ? placeholder : ''}
-          className="flex-1 min-w-[80px] text-sm outline-none bg-transparent"
+          className="flex-1 min-w-[80px] text-sm outline-none bg-transparent placeholder:text-ink-400"
         />
       </div>
 
       {showSuggestions && filteredSuggestions.length > 0 && (
-        <ul className="absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-32 overflow-y-auto">
+        <ul className="absolute z-10 w-full mt-1.5 bg-white border border-ink-200 rounded-lg shadow-lifted max-h-32 overflow-y-auto animate-fade-in">
           {filteredSuggestions.map(suggestion => (
             <li key={suggestion}>
               <button
                 type="button"
                 onClick={() => addTag(suggestion)}
-                className="w-full px-3 py-1.5 text-left text-sm hover:bg-gray-100"
+                className="w-full px-3 py-2 text-left text-sm text-ink-700 hover:bg-ink-50 transition-colors"
               >
                 {suggestion}
               </button>

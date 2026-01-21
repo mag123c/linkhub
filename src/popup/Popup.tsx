@@ -87,30 +87,35 @@ export function Popup() {
     : links;
 
   return (
-    <div className="flex flex-col h-full bg-white">
-      <header className="p-4 border-b border-gray-200 space-y-3">
-        <div className="flex items-center justify-between">
-          <h1 className="text-xl font-bold text-primary-600">LinkHub</h1>
+    <div className="flex flex-col h-full bg-ink-50">
+      {/* Header */}
+      <header className="px-5 pt-5 pb-4 border-b border-ink-200/60">
+        <div className="flex items-center justify-between mb-4">
+          <h1 className="font-serif text-2xl font-semibold text-ink-900 tracking-tight">
+            LinkHub
+          </h1>
           <button
             onClick={handleOpenSaveModal}
-            className="flex items-center gap-1 px-3 py-1.5 bg-primary-600 text-white text-sm font-medium rounded-lg hover:bg-primary-700 transition-colors"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-ink-900 text-ink-50 text-sm font-medium rounded-full hover:bg-ink-800 transition-colors shadow-soft"
           >
-            <Plus className="w-4 h-4" />
-            Save
+            <Plus className="w-4 h-4" strokeWidth={2.5} />
+            <span>Save</span>
           </button>
         </div>
 
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+        {/* Search */}
+        <div className="relative mb-3">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-ink-400" />
           <input
             type="text"
             placeholder="Search links..."
             value={searchQuery}
             onChange={e => handleSearch(e.target.value)}
-            className="w-full pl-9 pr-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+            className="w-full pl-9 pr-4 py-2.5 text-sm bg-white border border-ink-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-400/40 focus:border-accent-500 transition-all placeholder:text-ink-400"
           />
         </div>
 
+        {/* Tags */}
         <TagFilter
           tags={allTags}
           selectedTag={selectedTag}
@@ -118,38 +123,52 @@ export function Popup() {
         />
       </header>
 
-      <main className="flex-1 overflow-y-auto p-4">
+      {/* Content */}
+      <main className="flex-1 overflow-y-auto px-5 py-4">
         {isLoading ? (
           <div className="flex items-center justify-center h-32">
-            <div className="text-gray-500">Loading...</div>
+            <p className="text-ink-400 text-sm">Loading...</p>
           </div>
         ) : filteredLinks.length === 0 ? (
-          <div className="flex flex-col items-center justify-center h-32 text-gray-500">
+          <div className="flex flex-col items-center justify-center h-40 text-center">
             {links.length === 0 ? (
               <>
-                <p>No links saved yet</p>
-                <p className="text-sm">Click "Save" to add the current page</p>
+                <p className="text-ink-600 font-medium mb-1">No links yet</p>
+                <p className="text-ink-400 text-sm">Click "Save" to add the current page</p>
               </>
             ) : (
-              <p>No links match your filter</p>
+              <p className="text-ink-500 text-sm">No links match your search</p>
             )}
           </div>
         ) : (
-          <div className="space-y-3">
-            {filteredLinks.map(link => (
-              <LinkCard
+          <div className="space-y-2">
+            {filteredLinks.map((link, index) => (
+              <div
                 key={link.id}
-                link={link}
-                existingTags={allTags}
-                onUpdate={handleUpdateLink}
-                onDelete={handleDeleteLink}
-                onTagClick={handleTagClick}
-              />
+                className="animate-fade-in"
+                style={{ animationDelay: `${index * 30}ms` }}
+              >
+                <LinkCard
+                  link={link}
+                  existingTags={allTags}
+                  onUpdate={handleUpdateLink}
+                  onDelete={handleDeleteLink}
+                  onTagClick={handleTagClick}
+                />
+              </div>
             ))}
           </div>
         )}
       </main>
 
+      {/* Footer */}
+      <footer className="px-5 py-3 border-t border-ink-200/60">
+        <p className="text-2xs text-ink-400 text-center">
+          {links.length} link{links.length !== 1 ? 's' : ''} saved
+        </p>
+      </footer>
+
+      {/* Modal */}
       {showSaveModal && currentTab && (
         <SaveLinkModal
           tab={currentTab}

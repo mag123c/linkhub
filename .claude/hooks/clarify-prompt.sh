@@ -19,11 +19,7 @@ fi
 
 touch "$MARKER_FILE"
 
-# 짧은 프롬프트나 질문은 clarify 불필요
-PROMPT_LENGTH=${#PROMPT}
-if [ "$PROMPT_LENGTH" -lt 20 ]; then
-  exit 0
-fi
+# 모든 프롬프트에 clarify 권장 (길이 제한 제거)
 
 # 특정 키워드가 있으면 clarify 스킵 (명확한 요청)
 if echo "$PROMPT" | grep -qiE "^(commit|build|test|lint|fix typo|버그|오류)"; then
