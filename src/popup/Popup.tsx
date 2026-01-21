@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from '@/shared/types';
-import { getLinks, addLink, updateLink, deleteLink, getTags, searchLinks } from '@/shared/storage';
+import { getLinks, addLink, updateLink, deleteLink, getTags, deleteTag, searchLinks } from '@/shared/storage';
 import { Plus, Search } from 'lucide-react';
 import { TagFilter, LinkCard, SaveLinkModal } from './components';
 
@@ -82,6 +82,12 @@ export function Popup() {
     setSearchQuery('');
   }
 
+  async function handleDeleteTag(tag: string) {
+    await deleteTag(tag);
+    setSelectedTag(null);
+    await loadData();
+  }
+
   const filteredLinks = selectedTag
     ? links.filter(link => link.tags.includes(selectedTag))
     : links;
@@ -120,6 +126,7 @@ export function Popup() {
           tags={allTags}
           selectedTag={selectedTag}
           onSelect={handleTagFilter}
+          onDelete={handleDeleteTag}
         />
       </header>
 

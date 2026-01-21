@@ -82,6 +82,26 @@ export async function getTags(): Promise<string[]> {
   return data.tags;
 }
 
+export async function deleteTag(tag: string): Promise<boolean> {
+  const data = await getData();
+  const index = data.tags.indexOf(tag);
+
+  if (index === -1) return false;
+
+  data.tags.splice(index, 1);
+
+  // 해당 태그를 사용하는 링크에서도 제거
+  data.links.forEach(link => {
+    const tagIndex = link.tags.indexOf(tag);
+    if (tagIndex !== -1) {
+      link.tags.splice(tagIndex, 1);
+    }
+  });
+
+  await setData(data);
+  return true;
+}
+
 export async function getSettings(): Promise<Settings> {
   const data = await getData();
   return data.settings;
