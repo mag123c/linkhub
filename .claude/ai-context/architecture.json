@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "version": "1.0.0",
+  "project": {
+    "name": "LinkHub",
+    "type": "Chrome Extension",
+    "description": "Advanced bookmark manager with tags, search, and sharing"
+  },
+  "layers": {
+    "popup": {
+      "path": "src/popup/",
+      "description": "Extension popup UI",
+      "responsibilities": ["Link list view", "Quick save", "Search", "Tag filter"]
+    },
+    "options": {
+      "path": "src/options/",
+      "description": "Extension options page",
+      "responsibilities": ["Settings", "Data export/import", "Theme config"]
+    },
+    "background": {
+      "path": "src/background/",
+      "description": "Service worker",
+      "responsibilities": ["Context menu", "Badge updates", "Storage sync"]
+    },
+    "content": {
+      "path": "src/content/",
+      "description": "Content scripts (if needed)",
+      "responsibilities": ["Page metadata extraction"]
+    },
+    "shared": {
+      "path": "src/shared/",
+      "description": "Shared utilities and types",
+      "responsibilities": ["Types", "Storage API wrapper", "Utils"]
+    }
+  },
+  "storage": {
+    "type": "Chrome Storage API",
+    "areas": {
+      "local": "Link data, tags, settings (large data)",
+      "sync": "User preferences (small, cross-device)"
+    },
+    "quota": {
+      "local": "10MB",
+      "sync": "100KB total, 8KB per item"
+    }
+  },
+  "manifest": {
+    "version": "3",
+    "permissions": ["storage", "activeTab", "contextMenus"],
+    "host_permissions": []
+  },
+  "build": {
+    "tool": "Vite",
+    "plugin": "@crxjs/vite-plugin or vite-plugin-web-extension",
+    "output": "dist/"
+  },
+  "dependencies": {
+    "runtime": {
+      "react": "^18.x",
+      "lucide-react": "Icons"
+    },
+    "dev": {
+      "typescript": "^5.x",
+      "vite": "^5.x",
+      "tailwindcss": "^3.x",
+      "vitest": "Testing"
+    }
+  }
+}

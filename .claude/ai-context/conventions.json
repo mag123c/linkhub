@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "version": "1.0.0",
+  "naming": {
+    "components": {
+      "pattern": "{Name}.tsx",
+      "examples": ["LinkCard.tsx", "TagFilter.tsx", "SearchBar.tsx"]
+    },
+    "hooks": {
+      "pattern": "use{Name}.ts",
+      "examples": ["useLinks.ts", "useTags.ts", "useSearch.ts"]
+    },
+    "types": {
+      "pattern": "{entity}.types.ts",
+      "examples": ["link.types.ts", "tag.types.ts"]
+    },
+    "storage": {
+      "pattern": "{entity}.storage.ts",
+      "examples": ["link.storage.ts", "settings.storage.ts"]
+    },
+    "utils": {
+      "pattern": "{purpose}.ts",
+      "examples": ["search.ts", "export.ts", "qrcode.ts"]
+    }
+  },
+  "commit": {
+    "format": "{type}: {description}",
+    "types": {
+      "feat": "New feature",
+      "fix": "Bug fix",
+      "refactor": "Code improvement (no feature change)",
+      "docs": "Documentation",
+      "test": "Test addition/modification",
+      "chore": "Build, config, tooling",
+      "style": "Code formatting"
+    },
+    "examples": [
+      "feat: add tag-based filtering",
+      "fix: search not finding partial matches",
+      "refactor: extract storage utilities"
+    ],
+    "rules": [
+      "Use English commit messages",
+      "No Co-Authored-By or AI markers",
+      "Keep commits atomic and focused"
+    ]
+  },
+  "branch": {
+    "patterns": {
+      "feat/": "New features",
+      "fix/": "Bug fixes",
+      "refactor/": "Code improvements",
+      "docs/": "Documentation"
+    },
+    "format": "{type}/{kebab-case-description}",
+    "examples": ["feat/tag-filter", "fix/search-performance"]
+  },
+  "code_style": {
+    "typescript": {
+      "strict": true,
+      "esm": true,
+      "prefer_interface": "Use interface for object shapes, type for unions/aliases"
+    },
+    "react": {
+      "functional_components": "Always use functional components with hooks",
+      "naming": "PascalCase for components, camelCase for functions/variables"
+    },
+    "css": {
+      "framework": "Tailwind CSS",
+      "custom_classes": "Avoid, prefer Tailwind utilities"
+    },
+    "documentation": {
+      "new_directory": "Create CLAUDE.md when adding new directory",
+      "comments": "English comments, minimize when code is self-explanatory"
+    }
+  },
+  "architecture_rules": [
+    "Storage abstraction: Never call chrome.storage directly, use storage utilities",
+    "Type safety: All data must have TypeScript interfaces",
+    "Component isolation: Each component handles its own state or receives via props",
+    "Shared code: Common utilities go in src/shared/",
+    "No global state: Use React Context if state sharing needed"
+  ]
+}

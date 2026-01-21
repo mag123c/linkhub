@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "version": "1.0.0",
+  "entities": {
+    "Link": {
+      "description": "Core entity representing a saved URL",
+      "fields": {
+        "id": { "type": "string", "description": "UUID" },
+        "url": { "type": "string", "description": "Full URL" },
+        "title": { "type": "string", "description": "Page title" },
+        "favicon": { "type": "string?", "description": "Favicon URL or data URI" },
+        "tags": { "type": "string[]", "description": "Array of tag names" },
+        "memo": { "type": "string?", "description": "User note" },
+        "isReadLater": { "type": "boolean", "description": "Read-later flag" },
+        "createdAt": { "type": "number", "description": "Unix timestamp" },
+        "updatedAt": { "type": "number", "description": "Unix timestamp" }
+      },
+      "indexes": ["url", "tags", "createdAt", "isReadLater"]
+    },
+    "Tag": {
+      "description": "Derived from Link.tags, stored separately for quick access",
+      "fields": {
+        "name": { "type": "string", "description": "Tag name (unique)" },
+        "count": { "type": "number", "description": "Number of links with this tag" },
+        "color": { "type": "string?", "description": "Optional color code" }
+      }
+    },
+    "Settings": {
+      "description": "User preferences",
+      "fields": {
+        "theme": { "type": "'light' | 'dark' | 'system'", "default": "system" },
+        "defaultView": { "type": "'card' | 'list'", "default": "card" },
+        "showFavicons": { "type": "boolean", "default": true },
+        "confirmDelete": { "type": "boolean", "default": true }
+      },
+      "storage": "sync"
+    }
+  },
+  "relationships": {
+    "Link-Tag": {
+      "type": "many-to-many",
+      "description": "A link can have multiple tags, a tag can belong to multiple links"
+    }
+  },
+  "storage_mapping": {
+    "links": { "key": "linkhub_links", "area": "local" },
+    "settings": { "key": "linkhub_settings", "area": "sync" }
+  }
+}

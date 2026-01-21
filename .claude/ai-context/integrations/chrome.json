@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "version": "1.0.0",
+  "manifest_v3": {
+    "required_fields": ["manifest_version", "name", "version"],
+    "permissions_used": {
+      "storage": "Save and retrieve link data",
+      "activeTab": "Get current tab URL and title",
+      "contextMenus": "Right-click 'Save to LinkHub' option"
+    }
+  },
+  "apis": {
+    "storage": {
+      "local": {
+        "usage": "Large data (links array)",
+        "quota": "10MB",
+        "methods": ["get", "set", "remove", "clear"]
+      },
+      "sync": {
+        "usage": "Small settings (cross-device)",
+        "quota": "100KB total",
+        "methods": ["get", "set", "remove"]
+      }
+    },
+    "tabs": {
+      "usage": "Get current tab info for quick save",
+      "methods": ["query", "get"]
+    },
+    "contextMenus": {
+      "usage": "Add 'Save to LinkHub' context menu",
+      "methods": ["create", "onClicked"]
+    },
+    "runtime": {
+      "usage": "Message passing between popup and background",
+      "methods": ["sendMessage", "onMessage"]
+    }
+  },
+  "popup": {
+    "default_popup": "popup.html",
+    "dimensions": {
+      "width": "400px (recommended)",
+      "height": "600px (max before scroll)"
+    }
+  },
+  "service_worker": {
+    "file": "background.js",
+    "type": "module",
+    "responsibilities": [
+      "Context menu registration",
+      "Handle context menu clicks",
+      "Badge text updates"
+    ]
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

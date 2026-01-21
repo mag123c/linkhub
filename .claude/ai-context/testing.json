@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "version": "1.0.0",
+  "commands": {
+    "test": "pnpm test",
+    "test:run": "pnpm test:run",
+    "test:coverage": "pnpm test:coverage",
+    "lint": "pnpm lint",
+    "typecheck": "pnpm typecheck"
+  },
+  "framework": {
+    "name": "Vitest",
+    "config": "vitest.config.ts"
+  },
+  "locations": {
+    "unit_tests": "src/**/*.test.ts",
+    "component_tests": "src/**/*.test.tsx"
+  },
+  "patterns": {
+    "test_file": "{name}.test.ts or {name}.test.tsx",
+    "describe": "Component/function name",
+    "it": "should {expected behavior}"
+  },
+  "mocking": {
+    "chrome_api": "Use vitest-chrome or manual mocks",
+    "storage": "Mock chrome.storage.local and chrome.storage.sync"
+  },
+  "coverage": {
+    "target": "80%",
+    "exclude": ["*.d.ts", "*.config.*", "dist/"]
+  }
+}

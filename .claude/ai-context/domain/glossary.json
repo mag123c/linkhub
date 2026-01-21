@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "version": "1.0.0",
+  "terms": {
+    "link": {
+      "definition": "A saved URL with metadata (title, favicon, tags, memo)",
+      "korean": "링크"
+    },
+    "tag": {
+      "definition": "A label for categorizing links, one link can have multiple tags",
+      "korean": "태그"
+    },
+    "collection": {
+      "definition": "A named group of links (future feature)",
+      "korean": "컬렉션"
+    },
+    "read_later": {
+      "definition": "Flag indicating link is saved for future reading",
+      "korean": "나중에 읽기"
+    },
+    "share_link": {
+      "definition": "A URL that displays a link collection to others",
+      "korean": "공유 링크"
+    },
+    "export": {
+      "definition": "Converting link data to JSON/text format",
+      "korean": "내보내기"
+    },
+    "import": {
+      "definition": "Loading links from external source (JSON, bookmarks)",
+      "korean": "가져오기"
+    }
+  },
+  "ui_terms": {
+    "popup": "The small window shown when clicking extension icon",
+    "options_page": "Full-page settings accessible from extension menu",
+    "card_view": "Display links as visual cards with preview",
+    "list_view": "Display links as compact text list"
+  },
+  "storage_terms": {
+    "local_storage": "chrome.storage.local - Large capacity, device-specific",
+    "sync_storage": "chrome.storage.sync - Small capacity, cross-device sync"
+  }
+}
